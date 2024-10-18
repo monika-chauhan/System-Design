@@ -1,0 +1,254 @@
+Question 1: Difference between API Gateway and Load Balancer?
+Answer : API Gateway is designed to handle API requests and can also perform
+         authentication, rate limiting, and caching as opposed to just distributing 
+         traffic to multiple instances like load balancer.
+
+1. Implementation:
+Load balancers : are usually deployed as dedicated physical devices or software 
+                running on a set of virtual servers.
+API gateways : are usually implemented as a service—organizations often deploy an 
+                API gateway as a container or VM instance.
+2. Traffic Management Approach
+Application load balancers: command how traffic flows. A load balancer redirects 
+                            traffic across multiple servers. This ability helps large
+                            networks handle high traffic volumes and minimizes performance 
+                            issues associated with running an application on one server.
+API gateways: manage network traffic by processing API requests from clients to 
+            determine the necessary services and destination applications to handle
+            API calls. Clients are the software making API calls. APIs are important
+            for integrating disparate application components and enabling them to 
+            communicate. An API gateway also manages the protocols and translations 
+            between software components.
+3.Capabilities
+Load balancers: use algorithms to direct inbound network traffic to the appropriate servers: 
+    1.Round-robin algorithms distribute traffic evenly across servers. 
+    2.Least-connection algorithms direct traffic to the least burdened server (i.e., 
+    with the fewest connections)—they ensure high availability when the servers in a
+    given environment have varying capabilities.
+    3.IP hash algorithms direct traffic to servers according to the origin of the 
+    requests. They are best suited for environments with servers distributed across 
+    multiple geographic regions—these route network traffic to the nearest server to
+    minimize application latency.
+API gateways: act as translators and organizers connecting separate software components. 
+                Among their key capabilities are:
+    1.API security including authentication and authorization.
+    2.Rate-limiting for APIs to prevent abuse or over-utilization.
+    3.API monitoring and logging to assist with observability.
+    4.API transformation to enable services to communicate with each other even if they use different protocols or technology stacks.
+4.Use Cases
+Load balancers: are best suited to geographically distributed deployments that 
+                prioritize resilience and redundancy. A load balancer can redirect 
+                traffic to other instances on another server when a server fails. 
+                Enterprises usually run multiple application instances in parallel, 
+                sometimes on multiple physical servers. This approach provides 
+                redundancy to maintain high availability and ensure applications 
+                can handle all traffic. 
+API gateways :are best suited for designing and deploying microservices-based applications.
+ Enterprises often build modern applications as separate services, not a monolithic 
+ architecture. These independent services use APIs to communicate, with an API gateway
+  ensuring that all services function and collaborate properly in a unified deployment.
+
+
+Question 2: What is Forward Proxy?
+Answer : A forward proxy, also known as an outbound proxy, acts as an intermediary 
+between clients and external servers, intercepting outbound requests from clients and
+ forwarding them to their intended destinations.
+
+Here is what forward proxies do for you:
+1.Client-Side Proxying :Forward proxies are typically deployed on the client side of
+                        a network, serving as a gateway for outbound traffic. Clients
+                        configure their network settings to route traffic through the 
+                        forward proxy, which then forwards requests to external servers 
+                        on behalf of the clients.
+
+2.Anonymity and Privacy:Forward proxies can enhance user privacy and anonymity by masking
+                        the IP addresses of clients. External servers only see the IP
+                        address of the forward proxy, making it difficult to trace the
+                        origin of requests back to individual clients.
+
+3.Content Filtering and Caching:Forward proxies can implement content filtering policies 
+                                to restrict access to certain websites or content categories 
+                                based on predefined rules. Additionally, they can cache frequently
+                                accessed content, reducing bandwidth usage and improving performance 
+                                for subsequent requests.
+
+4.Security and Access Control:Forward proxies can also enforce security policies and 
+                            access controls, allowing organizations to regulate access 
+                            to external resources, block malicious websites, and inspect 
+                            outbound traffic for threats or policy violations.
+
+
+ ---------
+| Client 1 | \                                                          _________
+ ---------    \                                                        |_________| 
+                \                                                      |_________|             
+ ---------        \     ---------               ----------             |_________|
+| Client 1 |---------> | Forward | ----------> | Internet | ---------> |_________|
+ ---------       /     |  Proxy  |              ----------              Resources 
+               /        ---------                                         Server
+ ---------   /
+| Client 1 |/  
+ ---------
+
+            Client Side 
+
+Use Cases : Forward proxy is primarily used to shield clients from external networks, 
+            enhance privacy and security, and enforce access controls and its ideal 
+            for individual users, organizations, or networks requiring outbound 
+            traffic management and anonymity.
+
+Question 3: What is Reverse Proxy?
+Answer : A reverse proxy, also known as an inbound proxy, operates on the server side 
+        of a network, serving as a front-end facade for backend servers.
+        It intercepts incoming requests from clients and forwards them to the appropriate
+        back-end servers based on predefined rules.
+
+Key aspects of reverse proxies include:
+1.Server-Side Proxying :Reverse proxies are deployed on the server side of a network, 
+                        typically in front of backend web servers or application servers. 
+                        They accept incoming requests from clients on behalf of backend servers 
+                        and forward them internally.
+
+2.Load Balancing and Traffic Distribution :Reverse proxies can distribute incoming traffic
+                        across multiple backend servers to improve scalability, reliability, 
+                        and performance. They use algorithms such as round-robin, least connections, 
+                        or weighted distribution to evenly distribute requests.
+
+3.SSL Termination and Encryption :Reverse proxies can handle SSL/TLS termination, offloading 
+                        the encryption and decryption process from backend servers. 
+                        This simplifies management of SSL certificates and improves 
+                        performance by reducing the computational overhead on backend servers.
+
+4.Content Delivery and Optimization :Reverse proxies can cache static content, compress data, 
+                        and optimize delivery to clients, reducing latency and bandwidth 
+                        usage. They can also perform content rewriting or transformation 
+                        to adapt content for different client devices or browsers. 
+
+
+---------                                                             _________
+| User 1 | \                                                      /  | Server A|  
+ ---------    \                                                 /     ---------    
+                \                                             /                     
+ ---------        \    ----------              ----------   /          
+| User 2  |---------> | Internet | ----------> | Reverse  | --------->  ----------
+ ---------       /     ----------              |  Proxy   |            | Server B | 
+               /                                ----------              ----------
+ ---------   /
+| User 3 |/  
+ ---------                                          Server Side 
+
+Use Case : It is ideal for web servers, application servers, or microservices 
+architectures requiring load balancing, SSL termination, and content optimization.
+
+Question 4: Difference between Horizontal and Vertical Scaling in System Design
+Answer : 1. Scale up vs Scale out : 
+            1.Vertical scaling means adding more resources to single server while 
+            2.horizontal scaling means adding more instances that's why vertical 
+            scaling is now as scale up and horizontal scaling is known as scale out.
+    
+    Vertical Scaling                              Horizontal Scaling 
+Increased size of Instance(RAM, CUP etc)        (Add more Instance)
+    ____________                                 ____________   ____________  ____________
+    |computer 1|   /|\                           |computer 1|   |computer 2|  |computer 3 |
+    |__________|    |                            |__________|   |__________|  |___________|                            
+                    |
+    ____________    |                              ---------------------------->
+    | Computer 2|   |                                                              
+    |___________|   |
+
+2. Load Balancer
+    Horizontal scalability requires the use of load balancers to distribute incoming requests across multiple servers, 
+    while vertical scalability does not, which is often a deciding factor. 
+    If your architecture doesn't permit load balancing then you only have to scale vertically.
+                                                      
+                                                    __________________________________
+---------                                           |   -------------------------     |        
+| User 1 | \                                        |   | API Gateway Instance 1 |    |  Stock Control API                        
+ ---------    \                             |-----> |    ------------------------     |
+                \                           |       |     -------------------------   |                  
+ ---------        \    ---------------      |       |    | API Gateway Instance 2 |   | Payment API Group   
+| User 2  |---------> | Load Balancer | -----       | -------------------------   |
+ ---------       /     ---------------  -----       |_________________________________|
+               /                            |          Physical / Virtual Machine 1
+ ---------   /                              |        __________________________________
+| User 3 |/                                 |       |   -------------------------     |  
+ ---------                                  |       |   | API Gateway Instance 2 |    | Stock Control API     
+                                            |       |    ------------------------     |
+                                            |------>|     -------------------------   |
+                                                    |    | API Gateway Instance 4 |   | Payment API Control 
+                                                    |     -------------------------   |   
+                                                    |_________________________________|
+                                                        Physical / Virtual Machine 2
+
+3. Higher Scalability
+Horizontal scalability can achieve higher levels of scalability as the number of nodes 
+can be increased almost indefinitely, while vertical scalability has limitations due 
+to the maximum capacity of a single node or server.
+
+4. Architecture Preference
+Horizontal scalability is commonly associated with distributed systems, while vertical 
+scalability is usually associated with monolithic systems.
+
+                                                   
+---------                                               -----   -----   -----    ----         
+| User 1 | \                                |----->     | + |   | + |   | + |   | +  |-------------------|            
+ ---------    \                             |            ----    ----   -----    ----                    |
+                \                           |                                                            |
+ ---------        \    ---------------      |            -----    -----    -----     -----              \|/
+| User 2  |---------> | Load Balancer | ----- --------> | |_| |  | |_| |  | |_| |   | |_| |            __________
+ ---------       /     ---------------  -----           | |_| |  | |_| |  | |_| |   | |_| | ------->   |________|
+               /                                         -----    -----    -----     -----             |        |
+ ---------   /                                           Each Service Can be Scaled Independently      |  DB    |
+|  User 3 |/                                                Sevice is the scaling unit                 |________|
+ ---------                                             
+                                                   
+5. Handling Load
+Horizontal scalability is more suitable for handling unpredictable or varying loads, 
+while vertical scalability is more suitable for handling predictable loads.                                            
+
+6. Complexity
+Horizontal scalability involves adding more nodes or servers to a system in order to
+handle increased load or traffic. However, horizontal scalability can be more complex 
+to implement than vertical scalability, as it often requires more sophisticated load 
+balancing and coordination mechanisms between nodes.
+Additionally, horizontal scalability may not always result in a linear increase in 
+performance, since additional nodes may introduce more overhead or communication delays.                                                                                             
+
+On the other hand, Vertical scalability involves increasing the resources (such as 
+CPU, RAM, or storage) available to a single server or instance in order to handle 
+increased load or traffic.
+The main advantage of vertical scalability is that it is often easier and less complex
+to implement than horizontal scalability, since it involves simply adding more resources
+to an existing system.
+However, vertical scalability may be limited by the physical capacity of the hardware running
+the system, and may not be able to scale indefinitely.
+Additionally, vertical scalability can be more expensive than horizontal scalability, 
+since it often involves upgrading to more powerful or specialized hardware.
+
+7. Example
+An example of horizontal scalability is a web application that utilizes a load balancer
+to distribute incoming requests across multiple web servers. As traffic to the application 
+increases, additional servers can be added to the cluster to handle the additional load.
+
+Similarly, one example of vertical scalability is a database system that uses sharding to 
+partition data across multiple disks or storage devices within a single server.
+As the size of the database grows, additional storage devices can be added to the server
+to accommodate the additional data.
+
+Question 5 : Horizontal or Vertical Scaling? Which one is better for Microservices in Cloud?
+Answer : In general, horizontal scaling is considered better for microservices in the cloud 
+because it allows you to add more instances of the service to handle increased load.
+With horizontal scaling, you can distribute the workload across multiple instances, 
+which helps to ensure that the service remains available even if one instance goes down.
+Additionally, horizontal scaling is more cost-effective because it allows you to add 
+resources on an as-needed basis, rather than requiring you to invest in more powerful hardware upfront.
+
+Vertical scaling, on the other hand, can be more expensive and less flexible because 
+it requires upgrading the resources on a single instance to handle increased load.
+
+This approach can result in downtime if the instance needs to be taken offline for 
+maintenance or upgrades, and it may not be sufficient to handle sudden spikes in traffic.
+
+However, vertical scaling can be appropriate in certain situations where the workload
+is predictable and consistent, and it may be more straightforward to manage a single, 
+more powerful instance than multiple smaller instances.
